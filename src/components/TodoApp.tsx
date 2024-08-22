@@ -73,22 +73,40 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../TodoApp.css';
 import { FaCheck, FaPencilAlt, FaTrash } from 'react-icons/fa';
 
+// Define a TypeScript interface for the task
+interface Task {
+  taskId: string;
+  taskDescription: string;
+  completed: boolean;
+}
+
 const TodoApp: React.FC = () => {
   const [task, setTask] = useState('');
-  const [tasks, setTasks] = useState<{ taskId: string; taskDescription: string; completed: boolean }[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [nextId, setNextId] = useState(1);
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [editText, setEditText] = useState<string>('');
 
+  useEffect(() => {
+    fetch('http://localhost:8080/api/v1/task/getAllTasks')
+      .then(response => response.json())
+      .then((data: Task[]) => {
+        setTasks(data);
+        setNextId(data.length > 0 ? Math.max(...data.map(t => parseInt(t.taskId.split('-')[1], 10))) + 1 : 1);
+      })
+      .catch(error => {
+        console.error('Error fetching tasks:', error);
+      });
+  }, []);
+
   const addTask = () => {
     if (task) {
-      const newTask = { taskId: `task-${nextId}`, taskDescription: task, completed: false };
+      const newTask: Task = { taskId: `task-${nextId}`, taskDescription: task, completed: false };
 
-      
       fetch('http://localhost:8080/api/v1/task/saveTask', {
         method: 'POST',
         headers: {
@@ -97,8 +115,7 @@ const TodoApp: React.FC = () => {
         body: JSON.stringify(newTask),
       })
       .then(response => response.json())
-      .then(data => {
-      
+      .then((data: Task) => {
         setTasks([...tasks, data]);
         setNextId(nextId + 1);
         setTask('');
@@ -110,7 +127,7 @@ const TodoApp: React.FC = () => {
   };
 
   const toggleCompletion = (taskId: string) => {
-    setTasks(tasks.map(t => t.taskId === taskId ? { ...t, completed: !t.completed } : t));
+    setTasks(tasks.map((t: Task) => t.taskId === taskId ? { ...t, completed: !t.completed } : t));
   };
 
   const startEditing = (taskId: string, currentText: string) => {
@@ -142,11 +159,10 @@ const TodoApp: React.FC = () => {
         if (!response.ok) {
           throw new Error('Failed to update task');
         }
-        // return response.json();
-        return response.text();
+        return response.text(); // Handling the response as text
       })
       .then(() => {
-        setTasks(tasks.map(t => t.taskId === editingTaskId ? { ...t, taskDescription: editText.trim() } : t));
+        setTasks(tasks.map((t: Task) => t.taskId === editingTaskId ? { ...t, taskDescription: editText.trim() } : t));
         setEditingTaskId(null);
         setEditText('');
       })
@@ -164,7 +180,7 @@ const TodoApp: React.FC = () => {
       if (!response.ok) {
         throw new Error('Failed to delete task');
       }
-      setTasks(tasks.filter(t => t.taskId !== taskId));
+      setTasks(tasks.filter((t: Task) => t.taskId !== taskId));
     })
     .catch(error => {
       console.error('Error deleting task:', error);
@@ -191,7 +207,7 @@ const TodoApp: React.FC = () => {
           <button className="addButton" onClick={addTask}>Add</button>
         </div>
         <div className="task-list">
-          {tasks.map(t => (
+          {tasks.map((t: Task) => (
             <div key={t.taskId} className="task-item">
               {editingTaskId === t.taskId ? (
                 <div className="edit-container">
@@ -227,6 +243,7 @@ const TodoApp: React.FC = () => {
 };
 
 export default TodoApp;
+
 
 
 
