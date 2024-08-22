@@ -1,4 +1,158 @@
+.todo-app {
+    width: 100%;
+      position: absolute; 
+      top: 0;
+      left: 0;
+      padding: 10px; 
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      
+  }
+  
+  .header {
+    background-color: #e6d2aa;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .easy {
+    color: #706d67;
+  }
+  
+  .todo {
+    color: #d18d06;
+  }
+  
+ 
+  .todo-box {
+    background-color: #fff;
+    width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    margin-left: 450px;
+    text-align: center;
+    /* border: 5px solid #c17d06; */
+  }
+  
+  .input-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px 0 0 8px;
+    flex: 1;
+    font-size: 1rem;
+    background-color: #f7e2b7;
+  }
+  
+  .addButton {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0 8px 8px 0;
+    background-color: #d18d06;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .addButton:hover {
+    background-color: #c17d06;
+  }
+  
+  .task-list {
+    margin-top: 20px;
+  }
+  
+  .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .task-item:last-child {
+    border-bottom: none;
+  }
+  
+  .task-text {
+    flex: 1;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .task-text.completed {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  
+  .task-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .task-actions svg {
+    cursor: pointer;
+    color: #d1bb8e;
+  }
+  
+  @media (max-width: 600px) {
+    .header h1 {
+      font-size: 1.5rem;
+    }
+  
+    .todo-box {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  
+  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 .todo-app {
     width: 100%;
       position: absolute; 
@@ -11,11 +165,11 @@
   
   .header {
     background-color: #e6d2aa;
-    /* width: 100%; */
+   
     text-align: center;
     padding: 20px;
     border-radius: 8px;
-    /* border: 2px solid #706d67; */
+   
   }
   
   .header h1 {
@@ -43,4 +197,4 @@
 
 
 
-  
+   */
